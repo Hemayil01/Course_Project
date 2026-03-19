@@ -74,14 +74,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'course_db',
-        'USER': 'postgres',
-        'PASSWORD': 'hamar123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': env.db('DATABASE_URL', engine='django.db.backends.postgresql')
 }
 
 # Password validation
