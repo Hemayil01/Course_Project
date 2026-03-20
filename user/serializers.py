@@ -22,7 +22,7 @@ class UserPublicSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id', 'username', 'email', 'role', 'join_date', 'borrow_limit','first_name',
+            'id', 'username', 'email', 'role', 'join_date','first_name',
             'last_name', 'is_active', 'email_verified', 'profile', 'phone_verified'
         ]
 
@@ -30,12 +30,7 @@ class UserPublicSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'borrow_limit', 'role']
-        
-    def validate_borrow_limit(self, value):
-        if value > 10:
-            raise serializers.ValidationError('Borrow limit cannot exceed 10.')
-        return value
+        fields = ['first_name', 'last_name', 'role']
 
 
 class RegisterSerializer(serializers.ModelSerializer):

@@ -73,9 +73,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+
 DATABASES = {
-    'default': env.db('DATABASE_URL', engine='django.db.backends.postgresql')
-}
+    'default': env.db('DATABASE_URL', engine='django.db.backends.postgresql')}
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -165,15 +165,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Library Project API',
-    'DESCRIPTION': 'API documentation for the Library Management System',
+    'TITLE': 'Course Project API',
+    'DESCRIPTION': 'API documentation for the Course Management System',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'COMPONENT_SPLIT_REQUEST': True,
     'SCHEMA_PATH_PREFIX': '/api',
     'SWAGGER_UI_SETTINGS': {
         'deepLinking': True,
-        'persistAuthorization': True,  # JWT token stays in place
+        'persistAuthorization': True,
         'displayOperationId': True,
     },
     'SECURITY': [{'jwtAuth': []}],
