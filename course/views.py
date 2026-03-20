@@ -81,7 +81,7 @@ class EnrollmentAPIView(APIView):
     def post(self, request, course_id=None):
         serializer = EnrollmentModelSerializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        enrollment = serializer.save(student=request.user)
+        enrollment = serializer.save()
         return Response(
             {'message': 'Enrolled successfully', 'enrollment': EnrollmentModelSerializer(enrollment).data},
             status=status.HTTP_201_CREATED

@@ -30,7 +30,7 @@ class IsOwnerOrAdmin(IsAuthenticated):
             return request.user.is_authenticated
         return request.user.is_authenticated and (
             request.user.role == 'admin' or
-            hasattr(obj, 'student') and obj.student == request.user
+            getattr(obj, 'student', None) == request.user
         )
 
 
