@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from datetime import datetime
+import user
 from .models import Course, Lesson, Enrollment, Progress
 
 
@@ -45,14 +46,13 @@ class EnrollmentModelSerializer(serializers.ModelSerializer):
 
     def validate_course(self, value):
         user = self.context['request'].user
-        if Enrollment.objects.filter(student=user, course=value, status='active').exists():
+        if Enrollment.objects.filter(student=user, course=value, status=Enrollment.Status.ACTIVE).exists():
             raise serializers.ValidationError('You are already enrolled in this course')
         return value
 
     def create(self, validated_data):
         user = self.context['request'].user
-        enrollment = Enrollment.objects.create(student=user, **validated_data)
-        return enrollment
+        return Enrollment.objects.create(student=user, **validated_data)
 
 
 class ProgressModelSerializer(serializers.ModelSerializer):
@@ -61,7 +61,11 @@ class ProgressModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Progress
         fields = ['id', 'student', 'course', 'completed_lessons', 'completion_percentage', 'last_updated']
-        read_only_fields = ['id', 'student', 'course', 'completion_percentage', 'last_updated']
+        read_only_fields = ['id', 'student', 'completion_percentage', 'last_updated']
 
     def get_completion_percentage(self, obj):
         return obj.completion_percentage()
+    
+    def create(self, validated_data):
+        user = self.context['request'].user
+        return Progress.objects.create(student=user, **validated_data)
