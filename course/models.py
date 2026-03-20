@@ -66,3 +66,22 @@ class Progress(models.Model):
         if total_lessons == 0:
             return 0
         return (self.completed_lessons / total_lessons) * 100
+    
+
+class Progress(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='progress')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='progress')
+    completed_lessons = models.PositiveIntegerField(default=0)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.student.email} - {self.course.title}'
+
+    def completion_percentage(self):
+        total_lessons = self.course.lessons.count()
+        if total_lessons == 0:
+            return 0
+        return (self.completed_lessons / total_lessons) * 100
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['student', 'course'], name='unique_progress')]
